@@ -1,9 +1,21 @@
 #fanfour (temporary name)
 ## Developer setup instructions
 ### Installing packages and rvm (Ruby Version Manager)
-> sudo apt-get install git postgresql pgadmin3
+> $ sudo apt-get install git postgresql pgadmin3 libpq-dev
 >
 > $ \curl -L https://get.rvm.io | bash
+
+### Set up the postgres database
+> $ sudo su - postgres
+>
+> $ psql -U postgres postgres
+>
+> postgres=# CREATE ROLE seng WITH LOGIN SUPERUSER PASSWORD 'seng';
+>
+> postgres=# \q
+>
+> $ exit
+
 
 ### Clone the repo
 > git clone https://github.com/vincentt143/fanfour
@@ -25,4 +37,5 @@ Your terminal should display what version rvm is currently using. If it says rub
 >
 > bundle install
 
-Eventually we'll put some rake tasks to migrate and seed the database.
+### Create the database
+> rake db:create db:migrate

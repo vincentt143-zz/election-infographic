@@ -1,11 +1,10 @@
 #fanfour (temporary name)
 ## Developer setup instructions
 ### Installing packages and rvm (Ruby Version Manager)
-> sudo apt-get install git
+> sudo apt-get install git postgresql pgadmin3
 >
 > $ \curl -L https://get.rvm.io | bash
 
-Eventually we will need to install postgres as well but I haven't figured that part out yet.
 ### Clone the repo
 > git clone https://github.com/vincentt143/fanfour
 >

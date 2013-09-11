@@ -1,7 +1,6 @@
 # Grabs a list of all members of the House of Representatives from
 # the Australian Parliament House website
 
-require 'mechanize'
 require 'nokogiri'
 require 'open-uri'
 

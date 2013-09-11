@@ -38,4 +38,4 @@ Your terminal should display what version rvm is currently using. If it says rub
 > bundle install
 
 ### Create the database
-> rake db:create db:migrate db:seed
+> rake db:create db:schema:load db:seed

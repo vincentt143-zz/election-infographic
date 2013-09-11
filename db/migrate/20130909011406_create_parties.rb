@@ -4,7 +4,7 @@ class CreateParties < ActiveRecord::Migration
 
       t.timestamps
       t.string :name
-      t.string :members
+      t.integer :member_id
     end
   end
 end

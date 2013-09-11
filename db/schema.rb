@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20130909011406) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.integer  "member_id"
   end
 
   create_table "members", force: true do |t|
@@ -25,13 +26,15 @@ ActiveRecord::Schema.define(version: 20130909011406) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "title"
+    t.integer  "party_id"
+    t.integer  "electorate_id"
   end
 
   create_table "parties", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.string   "members"
+    t.integer  "member_id"
   end
 
 end

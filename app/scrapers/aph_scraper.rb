@@ -5,13 +5,6 @@ require 'nokogiri'
 require 'open-uri'
 
 def fetch_az_list(page)
-  #agent = Mechanize.new(){ |agent|
-  #  agent.history.max_size = 0
-  #}
-  #
-  #page = agent.get()
-  #
-  #response = page.content.gsub(/\s+/m," ")
 
   doc = Nokogiri::HTML(open("http://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?page=#{page}&expand=1&q=&mem=1&par=-1&gen=0&ps=100"))
 
@@ -50,9 +43,8 @@ def fetch_az_list(page)
           end
         end
       }
-
-      #member.party = data[1]
-      #member.electorate = data[0].split(',').first
+      member.party_id = Party.find_by(:name => data[1]).object_id
+      #member.electorates = data[0].split(',').first
       member.title = data[2]
 
       member.save

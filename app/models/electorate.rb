@@ -4,4 +4,8 @@ class Electorate < ActiveRecord::Base
 
   field :name, :type => String
   field :parties, :type => Party
+
+  def initialize
+
+  end
 end

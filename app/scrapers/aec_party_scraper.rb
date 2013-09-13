@@ -13,7 +13,7 @@ list = []
 doc.search("strong.r-party a").map {|a| list << a}
 
 list.each {|p|
-    party = Party.new
-    party.name = p.inner_html
-    party.save
-  }
+  party = Party.new
+  party.name = p.inner_html
+  party.save
+}

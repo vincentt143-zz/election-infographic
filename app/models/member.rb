@@ -1,6 +1,6 @@
 class Member < ActiveRecord::Base
-  belongs_to :parties
-  belongs_to :electorates
+  belongs_to :party
+  belongs_to :electorate
 
-  validates_presence_of :first_name, :last_name, :party_id
+  validates_presence_of :first_name, :last_name
 end

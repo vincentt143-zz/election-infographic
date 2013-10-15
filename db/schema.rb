@@ -11,13 +11,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130909011406) do
+ActiveRecord::Schema.define(version: 20131014232148) do
+
+  create_table "age_statistics", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "ones"
+    t.integer  "tens"
+    t.integer  "twenties"
+    t.integer  "thirties"
+    t.integer  "fourties"
+    t.integer  "fifties"
+    t.integer  "sixties"
+    t.integer  "seventies_plus"
+    t.integer  "electorate_id"
+  end
 
   create_table "electorates", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.integer  "member_id"
+  end
+
+  create_table "gender_statistics", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "males"
+    t.integer  "females"
+    t.integer  "electorate_id"
   end
 
   create_table "members", force: true do |t|
@@ -34,7 +55,6 @@ ActiveRecord::Schema.define(version: 20130909011406) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.integer  "member_id"
   end
 
 end

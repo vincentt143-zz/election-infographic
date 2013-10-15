@@ -43,8 +43,8 @@ def fetch_az_list(page)
           end
         end
       }
-      member.party_id = Party.find_by(:name => data[1]).object_id
-      member.electorate_id = Electorate.find_by(:name => data[0].split(',').first).object_id
+      member.party = Party.find_by(:name => data[1])
+      member.electorate = Electorate.find_by(:name => data[0].split(',').first)
       member.title = data[2]
 
       member.save

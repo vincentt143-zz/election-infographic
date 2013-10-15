@@ -4,7 +4,6 @@ class CreateElectorates < ActiveRecord::Migration
 
       t.timestamps
       t.string :name
-      t.integer :member_id
     end
   end
 end

@@ -9,3 +9,4 @@
 load 'aec_party_scraper.rb'
 load 'aec_electorate_scraper.rb'
 load 'aph_scraper.rb'
+load 'census_scraper.rb'

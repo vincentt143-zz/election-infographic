@@ -46,14 +46,8 @@ end
 # gem 'debugger', group: [:development, :test]
 
 gem 'zeus'
-gem 'haml'
-gem 'twitter-bootstrap-rails'
-gem 'highcharts-rails'
 gem 'twitter'
 gem 'nokogiri'
 gem 'koala'
 gem 'therubyracer'
 gem 'roo'
-gem 'selenium-webdriver'
-gem 'devise'
-gem 'zip'

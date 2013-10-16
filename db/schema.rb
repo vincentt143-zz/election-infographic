@@ -31,6 +31,10 @@ ActiveRecord::Schema.define(version: 20131014232148) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.integer  "labor_votes"
+    t.float    "labor_percentage"
+    t.integer  "liberal_votes"
+    t.float    "liberal_percentage"
   end
 
   create_table "gender_statistics", force: true do |t|

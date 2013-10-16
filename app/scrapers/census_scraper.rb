@@ -1,7 +1,10 @@
-# Grabs the Basic Community Profiles of
-# Australians
+# Grabs the age and gender statistics from
+# the Australian census data
 
 require 'roo'
+
+GenderStatistic.delete_all
+AgeStatistic.delete_all
 
 Dir.glob('db/census_data/*.XLS') do |data|
   xl = Roo::Excel.new(data)

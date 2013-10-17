@@ -32,4 +32,16 @@ Dir.glob('db/census_data/*.XLS') do |data|
   age.electorate = electorate
   age.save
 
+  xl.default_sheet = xl.sheets[24]
+  religion = ReligionStatistic.new
+  religion.christianity = xl.cell(32, "D")
+  religion.buddhism = xl.cell(11, "D")
+  religion.hinduism = xl.cell(33, "D")
+  religion.islam = xl.cell(34, "D")
+  religion.judaism = xl.cell(35, "D")
+  religion.other = xl.cell(39, "D") + xl.cell(41, "D") + xl.cell(42, "D")
+  religion.no_religion = xl.cell(40, "D")
+  religion.electorate = electorate
+  religion.save
+
 end

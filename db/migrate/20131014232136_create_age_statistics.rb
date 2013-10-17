@@ -7,7 +7,7 @@ class CreateAgeStatistics < ActiveRecord::Migration
       t.integer :tens
       t.integer :twenties
       t.integer :thirties
-      t.integer :fourties
+      t.integer :forties
       t.integer :fifties
       t.integer :sixties
       t.integer :seventies_plus

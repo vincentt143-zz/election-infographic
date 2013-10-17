@@ -46,7 +46,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 gem 'zeus'
-gem 'twitter'
+gem 'highcharts-rails'
 gem 'nokogiri'
 gem 'koala'
 gem 'therubyracer'

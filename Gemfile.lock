@@ -153,6 +153,7 @@ DEPENDENCIES
   roo
   sass-rails (~> 4.0.0)
   sdoc
+  sprockets-rails
   therubyracer
   turbolinks
   twitter

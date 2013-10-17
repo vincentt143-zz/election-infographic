@@ -1,0 +1,153 @@
+<!-- Code attributed to "http://bl.ocks.org/mbostock/2206590" -->
+<!-- mbostock's block #2206590 -->
+
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <style>
+
+      .background {
+          fill: none;
+          pointer-events: all;
+      }
+
+      #states {
+          fill: #aaa;
+      }
+
+      #states .active {
+          fill: orange;
+      }
+
+
+
+  </style>
+  <%= stylesheet_link_tag "pages"%>
+  <%= javascript_include_tag("d3")%>
+  <script>
+
+      var width = 960,
+              height = 500,
+              centered;
+
+      var projection = d3.geo.albersUsa()
+              .scale(1070)
+              .translate([width / 2, height / 2]);
+
+      var path = d3.geo.path()
+              .projection(projection);
+
+      var svg = d3.select("body").append("svg")
+              .attr("width", width)
+              .attr("height", height);
+
+      svg.append("rect")
+              .attr("class", "background")
+              .attr("width", width)
+              .attr("height", height)
+              .on("click", clicked);
+
+      var g = svg.append("g");
+
+      d3.json("TODO: insert json file", function(error, us) {
+          g.append("g")
+                  .attr("id", "states")
+                  .selectAll("path")
+                  .data(topojson.feature(us, us.objects.states).features)
+                  .enter().append("path")
+                  .attr("d", path)
+                  .on("click", clicked);
+
+          g.append("path")
+                  .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+                  .attr("id", "state-borders")
+                  .attr("d", path);
+      });
+
+      function clicked(d) {
+          var x, y, k;
+
+          if (d && centered !== d) {
+              var centroid = path.centroid(d);
+              x = centroid[0];
+              y = centroid[1];
+              k = 4;
+              centered = d;
+          } else {
+              x = width / 2;
+              y = height / 2;
+              k = 1;
+              centered = null;
+          }
+
+          g.selectAll("path")
+                  .classed("active", centered && function(d) { return d === centered; });
+
+          g.transition()
+                  .duration(750)
+                  .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+                  .style("stroke-width", 1.5 / k + "px");
+      }
+
+  </script>
+
+</head>
+<body>
+
+<div id="container">
+
+  <div id="facts-bar">
+
+    <div class="circle">
+      <div class="text-circle">
+        Gender Ratio
+      </div>
+    </div>
+
+    <div class="circle">
+      <div class="text-circle">
+        Age Distribution
+      </div>
+    </div>
+
+    <div class="circle">
+      <div class="text-circle">
+        Ethnic Ratio
+      </div>
+    </div>
+
+  </div>
+
+  <div id="content">
+    <h1 align="center">2013 Australian Federal Election</h1>
+
+    <div id="swing-bar">
+      <% image_tag "swing_bar.png"%>
+      <!--<img src="swing_bar.png" alt="Swing Bar">-->
+    </div>
+
+    <div id="instructions">
+      <div id="selection-instruction">
+        <h4 align="center"><i>Select a region to view more detailed statistics</i></h4>
+        <h4 align="center"><i>OR</i></h4>
+        <h4 align="center"><i>Search your suburb:</i></h4>
+        <form><input type="text" style="width: 90%" name="firstname"></form>
+      </div>
+      <div id="social-instruction">
+        Or share these statistics on Facebook or Twitter:
+      </div>
+    </div>
+
+    <div id="map">
+      <%= image_tag("australia_states_blank.png",options={:width => "85%", :height => "100%"})%>
+    </div>
+
+    <div id="twitter-feed">
+      <br> Twitter feed here
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

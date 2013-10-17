@@ -21,14 +21,11 @@ Dir.glob('db/census_data/*.XLS') do |data|
   gender.electorate = electorate
   gender.save
   age = AgeStatistic.new
-  age.ones = xl.cell(16, 'D') + xl.cell(22, 'D')
-  age.tens = xl.cell(28, 'D') + xl.cell(34, 'D')
-  age.twenties = xl.cell(40, 'D') + xl.cell(46, 'D')
-  age.thirties = xl.cell(16, 'I') + xl.cell(22, 'I')
-  age.forties = xl.cell(28, 'I') + xl.cell(34, 'I')
-  age.fifties = xl.cell(40, 'I') + xl.cell(46, 'I')
-  age.sixties = xl.cell(16, 'N') + xl.cell(22, 'N')
-  age.seventies_plus = xl.cell(28, 'N') + xl.cell(34, 'N') +  xl.cell(35, 'N') + xl.cell(36, 'N') + xl.cell(37, 'N') + xl.cell(38, 'N')
+  age.under_twenty_five = xl.cell(34, "D") - xl.cell(29, "D") + xl.cell(40, "D") - xl.cell(39, "D")
+  age.twenty_five_to_thirty_nine = xl.cell(29, "D") + xl.cell(46, "D") + xl.cell(16, "I") + xl.cell(17, "I") + xl.cell(18, "I") + xl.cell(19, "I")
+  age.forties = xl.cell(20, "I") + xl.cell(21, "I") + xl.cell(28, "I") + xl.cell(29, "I") + xl.cell(30, "I") + xl.cell(31, "I")
+  age.fifties = xl.cell(32, "I") + xl.cell(33, "I") + xl.cell(40, "I") + xl.cell(41, "I") + xl.cell(42, "I") + xl.cell(43, "I")
+  age.sixty_plus = xl.cell(44, "I") + xl.cell(45, "I") + xl.cell(16, "N") + xl.cell(22, "N") + xl.cell(28, "N") + xl.cell(34, "N") + xl.cell(35, "N") + xl.cell(36, "N") + xl.cell(37, "N") + xl.cell(38, "N") + xl.cell(39, "N")
   age.electorate = electorate
   age.save
 

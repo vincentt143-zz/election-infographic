@@ -1,129 +1,119 @@
-<!-- Code attributed to "http://bl.ocks.org/mbostock/2206590" -->
-<!-- mbostock's block #2206590 -->
-
 <!DOCTYPE html>
+<html>
 <head>
-  <meta charset="utf-8">
-  <style>
-
-      .background {
-          fill: none;
-          pointer-events: all;
-      }
-
-      #states {
-          fill: #aaa;
-      }
-
-      #states .active {
-          fill: orange;
-      }
-
-
-
-  </style>
   <%= stylesheet_link_tag "pages"%>
-  <%= javascript_include_tag("d3")%>
-  <script>
+  <%= javascript_include_tag "application"%>
+  <!--<link rel="stylesheet" type="text/css" href="base.css" />-->
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript">
 
-      var width = 960,
-              height = 500,
-              centered;
 
-      var projection = d3.geo.albersUsa()
-              .scale(1070)
-              .translate([width / 2, height / 2]);
 
-      var path = d3.geo.path()
-              .projection(projection);
 
-      var svg = d3.select("body").append("svg")
-              .attr("width", width)
-              .attr("height", height);
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
 
-      svg.append("rect")
-              .attr("class", "background")
-              .attr("width", width)
-              .attr("height", height)
-              .on("click", clicked);
 
-      var g = svg.append("g");
+      var genderData, ageData, ethnicData;
+      var genderChart, ageChart, ethnicChart;
+      var fetch = function() {
 
-      d3.json("TODO: insert json file", function(error, us) {
-          g.append("g")
-                  .attr("id", "states")
-                  .selectAll("path")
-                  .data(topojson.feature(us, us.objects.states).features)
-                  .enter().append("path")
-                  .attr("d", path)
-                  .on("click", clicked);
+          $.getJSON("/electorates", {electorate: "Greenway" }, function(data) {
+              updateChart(data);
+          });
+      };
+      var initChart = function() {
+          // Instantiate and draw our chart, passing in some options.
+          var genderNode = document.getElementById('gender');
+          var ageNode = document.getElementById('age')
+          var ethnicNode = document.getElementById('ethnicity')
+          genderChart = new google.visualization.PieChart(genderNode);
+          ageChart = new google.visualization.PieChart(ageNode);
+          ethnicChart = new google.visualization.PieChart(ethnicNode);
+      };
+      var updateChart = function(data) {
+          genderData = new google.visualization.DataTable();
+          ageData = new google.visualization.DataTable();
+          ethnicData = new google.visualization.DataTable();
+          console.log(data);
+          genderData.addColumn('string', 'Gender');
+          genderData.addColumn('number', 'Distribution');
+          genderData.addRows([
+              ['Male', data.gender.males],
+              ['Female', data.gender.females]
+          ]);
 
-          g.append("path")
-                  .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
-                  .attr("id", "state-borders")
-                  .attr("d", path);
-      });
+          ageData.addColumn('string', 'Age Group');
+          ageData.addColumn('number', 'Distribution');
+          ageData.addRows([
+              ['Under 25', data.age.under_twenty_five],
+              ['25-39', data.age.twenty_five_to_thirty_nine],
+              ['40-49', data.age.forties],
+              ['50-59', data.age.fifties],
+              ['60 and over', data.age.sixty_and_over]
+          ]);
 
-      function clicked(d) {
-          var x, y, k;
+          ethnicData.addColumn('string', 'Religion');
+          ethnicData.addColumn('number', 'Distribution');
+          ethnicData.addRows([
+              ['Christianity', data.religion.christianity],
+              ['Buddhism', data.religion.buddhism],
+              ['Hinduism', data.religion.hinduism],
+              ['Islam', data.religion.islam],
+              ['Judaism', data.religion.judaism],
+              ['Other', data.religion.other],
+              ['No religion', data.religion.no_religion]
+          ]);
 
-          if (d && centered !== d) {
-              var centroid = path.centroid(d);
-              x = centroid[0];
-              y = centroid[1];
-              k = 4;
-              centered = d;
-          } else {
-              x = width / 2;
-              y = height / 2;
-              k = 1;
-              centered = null;
-          }
+          // Set chart options
+          var genderOpt = {
+              'title':'Gender Distribution',
+              'width':200,
+              'height':200
+          };
+          var ageOpt = {
+              'title':'Age Distribution',
+              'width':200,
+              'height':200
+          };
+          var ethnicOpt = {
+              'title':'Ethnic Distribution',
+              'width':200,
+              'height':200
+          };
 
-          g.selectAll("path")
-                  .classed("active", centered && function(d) { return d === centered; });
 
-          g.transition()
-                  .duration(750)
-                  .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
-                  .style("stroke-width", 1.5 / k + "px");
-      }
 
+          genderChart.draw(genderData, genderOpt);
+          ageChart.draw(ageData, ageOpt);
+          ethnicChart.draw(ethnicData, ethnicOpt);
+      };
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(initChart);
   </script>
-
 </head>
 <body>
-
 <div id="container">
-
   <div id="facts-bar">
-
-    <div class="circle">
-      <div class="text-circle">
-        Gender Ratio
-      </div>
-    </div>
-
-    <div class="circle">
-      <div class="text-circle">
-        Age Distribution
-      </div>
-    </div>
-
-    <div class="circle">
-      <div class="text-circle">
-        Ethnic Ratio
-      </div>
-    </div>
-
+    <div id="gender"></div>
+    <div id="age"></div>
+    <div id="ethnicity"></div>
   </div>
 
   <div id="content">
     <h1 align="center">2013 Australian Federal Election</h1>
 
     <div id="swing-bar">
-      <% image_tag "swing_bar.png"%>
-      <!--<img src="swing_bar.png" alt="Swing Bar">-->
+      <div>Two Party Preferred Candidate</div>
+      <div>ALP</div>
+      <div>Coalition</div>
+      <div ></div>
+      <%= image_tag "swing_bar.png" %>
+      <!--<img src="Swing Bar.png" alt="Swing Bar">-->
     </div>
 
     <div id="instructions">
@@ -131,7 +121,9 @@
         <h4 align="center"><i>Select a region to view more detailed statistics</i></h4>
         <h4 align="center"><i>OR</i></h4>
         <h4 align="center"><i>Search your suburb:</i></h4>
-        <form><input type="text" style="width: 90%" name="firstname"></form>
+        <form>
+          <input type="text" style="width: 90%" name="firstname">
+        </form>
       </div>
       <div id="social-instruction">
         Or share these statistics on Facebook or Twitter:
@@ -139,14 +131,14 @@
     </div>
 
     <div id="map">
-      <%= image_tag("australia_states_blank.png",options={:width => "85%", :height => "100%"})%>
+      <%= image_tag "australia_states_blank.png", options={:width => "85%", :height => "100%"}%>
+      <!--<img src="australia_states_blank.png" style="width: 85%; height: 100%" alt="Australia">-->
     </div>
 
     <div id="twitter-feed">
-      <br> Twitter feed here
+      Twitter feed here
     </div>
   </div>
-
 </div>
 
 </body>

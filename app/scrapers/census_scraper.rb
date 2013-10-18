@@ -25,7 +25,7 @@ Dir.glob('db/census_data/*.XLS') do |data|
   age.twenty_five_to_thirty_nine = xl.cell(29, "D") + xl.cell(46, "D") + xl.cell(16, "I") + xl.cell(17, "I") + xl.cell(18, "I") + xl.cell(19, "I")
   age.forties = xl.cell(20, "I") + xl.cell(21, "I") + xl.cell(28, "I") + xl.cell(29, "I") + xl.cell(30, "I") + xl.cell(31, "I")
   age.fifties = xl.cell(32, "I") + xl.cell(33, "I") + xl.cell(40, "I") + xl.cell(41, "I") + xl.cell(42, "I") + xl.cell(43, "I")
-  age.sixty_plus = xl.cell(44, "I") + xl.cell(45, "I") + xl.cell(16, "N") + xl.cell(22, "N") + xl.cell(28, "N") + xl.cell(34, "N") + xl.cell(35, "N") + xl.cell(36, "N") + xl.cell(37, "N") + xl.cell(38, "N") + xl.cell(39, "N")
+  age.sixty_and_over = xl.cell(44, "I") + xl.cell(45, "I") + xl.cell(16, "N") + xl.cell(22, "N") + xl.cell(28, "N") + xl.cell(34, "N") + xl.cell(35, "N") + xl.cell(36, "N") + xl.cell(37, "N") + xl.cell(38, "N") + xl.cell(39, "N")
   age.electorate = electorate
   age.save
 

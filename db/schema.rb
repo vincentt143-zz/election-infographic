@@ -16,14 +16,11 @@ ActiveRecord::Schema.define(version: 20131017093416) do
   create_table "age_statistics", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "ones"
-    t.integer  "tens"
-    t.integer  "twenties"
-    t.integer  "thirties"
+    t.integer  "under_twenty_five"
+    t.integer  "twenty_five_to_thirty_nine"
     t.integer  "forties"
     t.integer  "fifties"
-    t.integer  "sixties"
-    t.integer  "seventies_plus"
+    t.integer  "sixty_and_over"
     t.integer  "electorate_id"
   end
 

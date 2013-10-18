@@ -3,23 +3,14 @@
 <head>
   <%= stylesheet_link_tag "pages"%>
   <%= javascript_include_tag "application"%>
-  <!--<link rel="stylesheet" type="text/css" href="base.css" />-->
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <script type="text/javascript">
 
+      var genderData, ageData, religionData;
+      var genderChart, ageChart, religionChart;
+      var fetch = function(electorate) {
 
-
-
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-
-
-      var genderData, ageData, ethnicData;
-      var genderChart, ageChart, ethnicChart;
-      var fetch = function() {
-
-          $.getJSON("/electorates", {electorate: "Greenway" }, function(data) {
+          $.getJSON("/electorates", {electorate: electorate}, function(data) {
               updateChart(data);
           });
       };
@@ -27,15 +18,15 @@
           // Instantiate and draw our chart, passing in some options.
           var genderNode = document.getElementById('gender');
           var ageNode = document.getElementById('age')
-          var ethnicNode = document.getElementById('ethnicity')
+          var religionNode = document.getElementById('religious_belief')
           genderChart = new google.visualization.PieChart(genderNode);
           ageChart = new google.visualization.PieChart(ageNode);
-          ethnicChart = new google.visualization.PieChart(ethnicNode);
+          religionChart = new google.visualization.PieChart(religionNode);
       };
       var updateChart = function(data) {
           genderData = new google.visualization.DataTable();
           ageData = new google.visualization.DataTable();
-          ethnicData = new google.visualization.DataTable();
+          religionData = new google.visualization.DataTable();
           console.log(data);
           genderData.addColumn('string', 'Gender');
           genderData.addColumn('number', 'Distribution');
@@ -54,9 +45,9 @@
               ['60 and over', data.age.sixty_and_over]
           ]);
 
-          ethnicData.addColumn('string', 'Religion');
-          ethnicData.addColumn('number', 'Distribution');
-          ethnicData.addRows([
+          religionData.addColumn('string', 'Religion');
+          religionData.addColumn('number', 'Distribution');
+          religionData.addRows([
               ['Christianity', data.religion.christianity],
               ['Buddhism', data.religion.buddhism],
               ['Hinduism', data.religion.hinduism],
@@ -77,8 +68,8 @@
               'width':200,
               'height':200
           };
-          var ethnicOpt = {
-              'title':'Ethnic Distribution',
+          var religionOpt = {
+              'title':'Religion Distribution',
               'width':200,
               'height':200
           };
@@ -87,13 +78,17 @@
 
           genderChart.draw(genderData, genderOpt);
           ageChart.draw(ageData, ageOpt);
-          ethnicChart.draw(ethnicData, ethnicOpt);
+          religionChart.draw(religionData, religionOpt);
       };
       // Load the Visualization API and the piechart package.
       google.load('visualization', '1.0', {'packages':['corechart']});
 
       // Set a callback to run when the Google Visualization API is loaded.
       google.setOnLoadCallback(initChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
   </script>
 </head>
 <body>
@@ -101,7 +96,7 @@
   <div id="facts-bar">
     <div id="gender"></div>
     <div id="age"></div>
-    <div id="ethnicity"></div>
+    <div id="religious_belief"></div>
   </div>
 
   <div id="content">
@@ -113,7 +108,6 @@
       <div>Coalition</div>
       <div ></div>
       <%= image_tag "swing_bar.png" %>
-      <!--<img src="Swing Bar.png" alt="Swing Bar">-->
     </div>
 
     <div id="instructions">
@@ -132,7 +126,6 @@
 
     <div id="map">
       <%= image_tag "australia_states_blank.png", options={:width => "85%", :height => "100%"}%>
-      <!--<img src="australia_states_blank.png" style="width: 85%; height: 100%" alt="Australia">-->
     </div>
 
     <div id="twitter-feed">

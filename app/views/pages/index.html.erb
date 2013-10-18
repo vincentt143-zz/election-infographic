@@ -9,7 +9,6 @@
       var genderData, ageData, religionData;
       var genderChart, ageChart, religionChart;
       var fetch = function(electorate) {
-
           $.getJSON("/electorates", {electorate: electorate}, function(data) {
               updateChart(data);
           });
@@ -114,23 +113,24 @@
       <div id="selection-instruction">
         <h4 align="center"><i>Select a region to view more detailed statistics</i></h4>
         <h4 align="center"><i>OR</i></h4>
-        <h4 align="center"><i>Search your suburb:</i></h4>
-        <form>
-          <input type="text" style="width: 90%" name="firstname">
+        <h4 align="center"><i>Search your electorate:</i></h4>
+        <form id="electorate_form" onSubmit="event.preventDefault(); fetch($('#electorate_form input#electorate').val())">
+          <input id="electorate" type="text" style="width: 90%" name="electorate">
+          <input type="submit" value="Submit">
         </form>
       </div>
-      <div id="social-instruction">
-        Or share these statistics on Facebook or Twitter:
-      </div>
+      <!--<div id="social-instruction">-->
+        <!--Or share these statistics on Facebook or Twitter:-->
+      <!--</div>-->
     </div>
 
     <div id="map">
       <%= image_tag "australia_states_blank.png", options={:width => "85%", :height => "100%"}%>
     </div>
 
-    <div id="twitter-feed">
-      Twitter feed here
-    </div>
+    <!--<div id="twitter-feed">-->
+      <!--Twitter feed here-->
+    <!--</div>-->
   </div>
 </div>
 

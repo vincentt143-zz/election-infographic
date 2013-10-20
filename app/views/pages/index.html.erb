@@ -60,17 +60,20 @@
           var genderOpt = {
               'title':'Gender Distribution',
               'width':200,
-              'height':200
+              'height':200,
+              'legend': 'none'
           };
           var ageOpt = {
               'title':'Age Distribution',
               'width':200,
-              'height':200
+              'height':200,
+              'legend': 'none'
           };
           var religionOpt = {
               'title':'Religion Distribution',
               'width':200,
-              'height':200
+              'height':200,
+              'legend': 'none'
           };
 
 
@@ -78,6 +81,23 @@
           genderChart.draw(genderData, genderOpt);
           ageChart.draw(ageData, ageOpt);
           religionChart.draw(religionData, religionOpt);
+
+          var data = google.visualization.arrayToDataTable([
+              ['', 'ALP', 'Coalition'],
+              ['',  data.labor_votes, data.liberal_votes]
+          ]);
+          console.log(data.labor_votes);
+          var options = {
+              title: 'Two Party Preferred Candidates',
+              hAxis: { textPosition: 'none', gridlines: {color: 'transparent'}, baselineColor: 'transparent'},
+              vAxis: { textPosition: 'none'},
+              isStacked: true,
+              legend: {position: 'none'},
+              height: '50'
+          };
+
+          var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+          chart.draw(data, options);
       };
       // Load the Visualization API and the piechart package.
       google.load('visualization', '1.0', {'packages':['corechart']});
@@ -106,7 +126,7 @@
       <div>ALP</div>
       <div>Coalition</div>
       <div ></div>
-      <%= image_tag "swing_bar.png" %>
+        <div id="chart_div" style="width: 900px; height: 50px;"></div>
     </div>
 
     <div id="instructions">

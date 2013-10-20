@@ -15,8 +15,8 @@ list.each do |e|
   next if electorate == nil
 
   electorate.labor_votes = Integer(data[2].inner_html.gsub(/,/, ""))
-  electorate.labor_percentage = Float(data[3].inner_html.gsub(/,/, ""))
+  electorate.labor_percentage = Float(data[3].inner_html.gsub(/,/, ""))/100
   electorate.liberal_votes = Integer(data[4].inner_html.gsub(/,/, ""))
-  electorate.liberal_percentage = Float(data[5].inner_html.gsub(/,/, ""))
+  electorate.liberal_percentage = Float(data[5].inner_html.gsub(/,/, ""))/100
   electorate.save
 end

@@ -84,19 +84,22 @@
 
           var data = google.visualization.arrayToDataTable([
               ['', 'ALP', 'Coalition'],
-              ['',  data.labor_votes, data.liberal_votes]
+              ['',  data.labor_percentage, data.liberal_percentage]
           ]);
-          console.log(data.labor_votes);
+
           var options = {
               title: 'Two Party Preferred Candidates',
-              hAxis: { textPosition: 'none', gridlines: {color: 'transparent'}, baselineColor: 'transparent'},
+              hAxis: { textPosition: 'none', gridlines: {color: 'transparent'}, baselineColor: 'transparent', format: '#%'},
               vAxis: { textPosition: 'none'},
               isStacked: true,
               legend: {position: 'none'},
-              height: '50'
+              height: '50',
+              colors: ['#CC0000', '#0000CC']
           };
-
-          var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+          var formatter = new google.visualization.NumberFormat({pattern:'##.##%'});
+          formatter.format(data, 1);
+          formatter.format(data, 2);
+          var chart = new google.visualization.BarChart(document.getElementById('two_party_chart'));
           chart.draw(data, options);
       };
       // Load the Visualization API and the piechart package.
@@ -126,7 +129,7 @@
       <div>ALP</div>
       <div>Coalition</div>
       <div ></div>
-        <div id="chart_div" style="width: 900px; height: 50px;"></div>
+        <div id="two_party_chart" style="width: 740px; height: 50px;"></div>
     </div>
 
     <div id="instructions">

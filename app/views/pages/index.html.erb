@@ -16,7 +16,7 @@
               } else {
                   var element=document.getElementById("electorate_found");
                   element.style.visibility = "hidden";
-                update(data);
+                  update(data);
               }
           });
 
@@ -166,12 +166,12 @@
       <div>ALP</div>
       <div>Coalition</div>
       <div ></div>
-        <div id="two_party_chart" style="width: 740px; height: 50px;"></div>
+      <div id="two_party_chart" style="width: 740px; height: 50px;"></div>
     </div>
 
     <div id="instructions">
       <div id="selection-instruction">
-        <h4 align="center"><i>Select an electorate to view more detailed statistics</i></h4>
+        <h4 align="center"><i>Click on an electorate to view that electorate's election data</i></h4>
         <h4 align="center"><i>OR</i></h4>
         <h4 align="center"><i>Search your electorate:</i></h4>
         <form id="electorate_form" onSubmit="event.preventDefault(); fetch($('#electorate_form input#electorate').val())">
@@ -188,15 +188,14 @@
   </div>
 </div>
 <script>
-    // 580 x 450
     //http://bost.ocks.org/mike/map/
 
-    var width = 960,
-            height = 1160;
+    var width = 580,
+            height = 450;
 
     var projection = d3.geo.mercator()
             .scale(500)
-            .translate([-7*width/8, 0]);
+            .translate([-3*width/2  , 0]);
 
     var path = d3.geo.path()
             .projection(projection);

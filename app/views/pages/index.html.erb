@@ -10,10 +10,11 @@
       var genderChart, ageChart, religionChart;
       var fetch = function(electorate) {
           $.getJSON("/electorates", {electorate: electorate}, function(data) {
-              updateChart(data);
+              update(data);
           });
+
       };
-      var initChart = function() {
+      var init = function() {
           // Instantiate and draw our chart, passing in some options.
           var genderNode = document.getElementById('gender');
           var ageNode = document.getElementById('age')
@@ -23,11 +24,14 @@
           religionChart = new google.visualization.PieChart(religionNode);
           fetch("Australia");
       };
-      var updateChart = function(data) {
+      var update = function(data) {
+          var element=document.getElementById("data_for");
+          element.innerHTML="Election data for " + data.name;
+
           genderData = new google.visualization.DataTable();
           ageData = new google.visualization.DataTable();
           religionData = new google.visualization.DataTable();
-          console.log(data);
+
           genderData.addColumn('string', 'Gender');
           genderData.addColumn('number', 'Distribution');
           genderData.addRows([
@@ -59,38 +63,36 @@
 
           // Set chart options
           var genderOpt = {
-              'title':'Gender Distribution',
+              'title':'Gender distribution for ' + data.name,
               'width':200,
               'height':200,
               'legend': 'none'
           };
           var ageOpt = {
-              'title':'Age Distribution',
+              'title':'Age distribution for ' + data.name,
               'width':200,
               'height':200,
               'legend': 'none'
           };
           var religionOpt = {
-              'title':'Religion Distribution',
+              'title':'Religious distribution for ' + data.name,
               'width':200,
               'height':200,
               'legend': 'none'
           };
 
-
-
           genderChart.draw(genderData, genderOpt);
           ageChart.draw(ageData, ageOpt);
           religionChart.draw(religionData, religionOpt);
 
-          var data = google.visualization.arrayToDataTable([
+          var twoPartyData = google.visualization.arrayToDataTable([
               ['', 'ALP', 'Coalition'],
               ['',  data.labor_percentage, data.liberal_percentage]
           ]);
 
           var options = {
               title: 'Two Party Preferred Candidates',
-              hAxis: { textPosition: 'none', gridlines: {color: 'transparent'}, baselineColor: 'transparent', format: '#%'},
+              hAxis: { textPosition: 'none', gridlines: {color: 'transparent'}, baselineColor: 'transparent', format: '##.##%'},
               vAxis: { textPosition: 'none'},
               isStacked: true,
               legend: {position: 'none'},
@@ -98,21 +100,24 @@
               colors: ['#CC0000', '#0000CC']
           };
           var formatter = new google.visualization.NumberFormat({pattern:'##.##%'});
-          formatter.format(data, 1);
-          formatter.format(data, 2);
+          formatter.format(twoPartyData, 1);
+          formatter.format(twoPartyData, 2);
           var chart = new google.visualization.BarChart(document.getElementById('two_party_chart'));
-          chart.draw(data, options);
+          chart.draw(twoPartyData, options);
       };
       // Load the Visualization API and the piechart package.
       google.load('visualization', '1.0', {'packages':['corechart']});
 
       // Set a callback to run when the Google Visualization API is loaded.
-      google.setOnLoadCallback(initChart);
+      google.setOnLoadCallback(init);
 
       // Callback that creates and populates a data table,
       // instantiates the pie chart, passes in the data and
       // draws it.
   </script>
+  <!--<script type="text/javascript" src="d3.v3.min.js"></script>-->
+  <!--<script type="text/javascript" src="topojson.v1.min.js"></script>-->
+
 </head>
 <body>
 <div id="container">
@@ -123,8 +128,8 @@
   </div>
 
   <div id="content">
-    <h1 align="center">2013 Australian Federal Election</h1>
-
+    <h2 align="center">2013 Australian Federal Election</h2>
+    <h4 align="center" id="data_for">Election data for Australia</h4>
     <div id="swing-bar">
       <div>Two Party Preferred Candidate</div>
       <div>ALP</div>
@@ -135,7 +140,7 @@
 
     <div id="instructions">
       <div id="selection-instruction">
-        <h4 align="center"><i>Select a region to view more detailed statistics</i></h4>
+        <h4 align="center"><i>Select an electorate to view more detailed statistics</i></h4>
         <h4 align="center"><i>OR</i></h4>
         <h4 align="center"><i>Search your electorate:</i></h4>
         <form id="electorate_form" onSubmit="event.preventDefault(); fetch($('#electorate_form input#electorate').val())">
@@ -143,20 +148,47 @@
           <input type="submit" value="Submit">
         </form>
       </div>
-      <!--<div id="social-instruction">-->
-        <!--Or share these statistics on Facebook or Twitter:-->
-      <!--</div>-->
     </div>
 
-    <div id="map">
-      <%= image_tag "australia_states_blank.png", options={:width => "85%", :height => "100%"}%>
+    <div id="map" style="width:580px; height: 450px">
     </div>
 
-    <!--<div id="twitter-feed">-->
-      <!--Twitter feed here-->
-    <!--</div>-->
   </div>
 </div>
+<script>
+    // 580 x 450
+    //http://bost.ocks.org/mike/map/
 
+    var width = 960,
+            height = 1160;
+
+    var projection = d3.geo.mercator()
+            .scale(500)
+            .translate([-7*width/8, 0]);
+
+    var path = d3.geo.path()
+            .projection(projection);
+
+    var svg = d3.select("#map").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+    d3.json("topostraya_full.json", function(error, topostraya_full) {
+        svg.append("path")
+                .datum(topojson.feature(topostraya_full, topostraya_full.objects.astraya))
+                .attr("d", path);
+        svg.append("path")
+                .datum(topojson.mesh(topostraya_full, topostraya_full.objects.astraya, function(a, b) { return a !== b }))
+                .attr("d", path)
+                .attr("class", "subunit-boundary")
+                .attr("electorate", topostraya_full.objects.astraya)
+                .on("click", clicked);
+    });
+
+    function clicked(electorate) {
+        console.log(electorate);
+    }
+
+</script>
 </body>
 </html>

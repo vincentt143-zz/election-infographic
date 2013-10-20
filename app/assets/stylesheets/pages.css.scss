@@ -47,7 +47,11 @@ body {
   z-index: 0;
 }
 
-h1 {
+h2 {
+  color: #000066;
+}
+
+h4 {
   color: #000066;
 }
 
@@ -89,4 +93,8 @@ h1 {
 #twitter-feed {
   background-color: #EEEEEE;
   width: 740px;
+}
+
+.subunit-boundary {
+  stroke: white;
 }

@@ -14,7 +14,7 @@ body {
 }
 
 #facts-bar {
-  background-color: #00BBCC;
+  //background-color: #00BBCC;
   height: 600px;
   width: 200px;
   float: left;
@@ -97,4 +97,18 @@ h4 {
 
 .subunit-boundary {
   stroke: white;
+}
+
+#electorate_found {
+  visibility: hidden;
+  color: red
+}
+
+#has_facts {
+  visibility: hidden;
+  color: red
+}
+
+#electorate {
+  width: 90%;
 }

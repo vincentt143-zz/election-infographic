@@ -20,3 +20,7 @@ list.each {|e|
   end
 
 }
+
+electorate = Electorate.new
+electorate.name = "Australia"
+electorate.save

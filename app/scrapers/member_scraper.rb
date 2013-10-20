@@ -21,3 +21,17 @@ IO.foreach(file) do |line|
   member.party = party
   member.save
 end
+
+member = Member.new
+member.first_name = "Kevin"
+member.last_name = "Rudd"
+member.electorate = Electorate.find_by(:name => "Australia")
+member.party = Party.find_by(:name => "Australian Labor Party (ALP)")
+member.save
+
+member = Member.new
+member.first_name = "Tony"
+member.last_name = "Abbott"
+member.electorate = Electorate.find_by(:name => "Australia")
+member.party = Party.find_by(:name => "Liberal Party of Australia")
+member.save

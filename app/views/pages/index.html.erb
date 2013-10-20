@@ -21,6 +21,7 @@
           genderChart = new google.visualization.PieChart(genderNode);
           ageChart = new google.visualization.PieChart(ageNode);
           religionChart = new google.visualization.PieChart(religionNode);
+          fetch("Australia");
       };
       var updateChart = function(data) {
           genderData = new google.visualization.DataTable();

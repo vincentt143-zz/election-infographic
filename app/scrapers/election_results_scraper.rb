@@ -20,3 +20,23 @@ list.each do |e|
   electorate.liberal_percentage = Float(data[5].inner_html.gsub(/,/, ""))/100
   electorate.save
 end
+
+doc = Nokogiri::HTML(open("http://vtr.aec.gov.au"))
+electorate = Electorate.find_by(:name => "Australia")
+list = []
+doc.search("//tr[@id='repeaterTpp__ctl0_tppRow']").map {|a| list << a}
+list.each do |e|
+  data = e.search("td")
+  puts data
+  electorate.labor_votes = Integer(data[1].inner_html.gsub(/,/, ""))
+  electorate.labor_percentage = Float(data[2].inner_html.gsub(/,/, ""))/100
+end
+
+list = []
+doc.search("//tr[@id='repeaterTpp__ctl1_tppRow']").map {|a| list << a}
+list.each do |e|
+  data = e.search("td")
+  electorate.liberal_votes = Integer(data[1].inner_html.gsub(/,/, ""))
+  electorate.liberal_percentage = Float(data[2].inner_html.gsub(/,/, ""))/100
+end
+electorate.save

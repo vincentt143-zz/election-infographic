@@ -3,14 +3,13 @@
 
 require 'roo'
 
-GenderStatistic.delete_all
-AgeStatistic.delete_all
-
-Dir.glob('db/census_data/*.XLS') do |data|
-  xl = Roo::Excel.new(data)
+def extract(file)
+  xl = Roo::Excel.new(file)
   xl.default_sheet = xl.sheets[0]
   name = xl.cell(9, 'B')
-  name = /^\s*[^,]+/.match(name)
+  name = /^\s*[^,(]+/.match(name).to_s
+  name = name.gsub(/^\s*/, "")
+  name = name.gsub(/\s*$/, "")
   electorate = Electorate.find_by(:name => "#{name}")
 
   xl.default_sheet = xl.sheets[10]
@@ -40,5 +39,17 @@ Dir.glob('db/census_data/*.XLS') do |data|
   religion.no_religion = xl.cell(40, "D")
   religion.electorate = electorate
   religion.save
+end
 
+GenderStatistic.delete_all
+AgeStatistic.delete_all
+ReligionStatistic.delete_all
+
+Dir.glob('db/census_data/BCP_CED*.XLS') do |file|
+  extract file
+end
+
+Dir.glob('db/census_data/BCP_0.XLS') do |file|
+
+  extract file
 end

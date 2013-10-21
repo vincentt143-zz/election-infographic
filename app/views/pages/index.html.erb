@@ -255,6 +255,7 @@
         g.append("path")
                 .datum(topojson.mesh(topostraya_full, topostraya_full.objects.astraya, function(a, b) { return a !== b }))
                 .attr("class", "subunit-boundary")
+                .attr("value", "Test")
                 .attr("d", path);
     });
 
@@ -269,12 +270,17 @@
             y = centroid[1];
             k = 4;
             centered = d;
+
+            fetch(d.id);
         } else {
             x = width / 2;
             y = height / 2;
             k = 1;
             centered = null;
+            fetch("Australia");
         }
+
+
         g.selectAll("path")
                 .classed("active", centered && function(d) { return d === centered; });
         g.transition()

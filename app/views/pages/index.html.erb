@@ -96,13 +96,13 @@
               vAxis: { textPosition: 'none'},
               isStacked: true,
               legend: {position: 'none'},
-              height: '50',
+              height: '30',
               colors: ['#CC0000', '#0000CC']
           };
           var formatter = new google.visualization.NumberFormat({pattern:'##.##%'});
           formatter.format(twoPartyData, 1);
           formatter.format(twoPartyData, 2);
-          var chart = new google.visualization.BarChart(document.getElementById('two_party_chart'));
+          var chart = new google.visualization.BarChart(document.getElementById('two-party-chart'));
           chart.draw(twoPartyData, options);
       };
       // Load the Visualization API and the piechart package.
@@ -131,11 +131,12 @@
     <h2 align="center">2013 Australian Federal Election</h2>
     <h4 align="center" id="data_for">Election data for Australia</h4>
     <div id="swing-bar">
-      <div>Two Party Preferred Candidate</div>
-      <div>ALP</div>
-      <div>Coalition</div>
-      <div ></div>
-        <div id="two_party_chart" style="width: 740px; height: 50px;"></div>
+      <div id="two-party-title">Two Party Preferred Candidate Vote Distribution</div>
+      <div style="height: 15px">
+        <div id="alp-label">ALP</div>
+        <div id="coalition-label">Coalition</div>
+      </div>
+      <div id="two-party-chart"></div>
     </div>
 
     <div id="instructions">
@@ -150,7 +151,7 @@
       </div>
     </div>
 
-    <div id="map" style="width:580px; height: 450px">
+    <div id="map">
     </div>
 
   </div>

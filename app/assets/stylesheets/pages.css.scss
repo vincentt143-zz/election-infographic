@@ -14,23 +14,11 @@ body {
 }
 
 #facts-bar {
-  background-color: #00BBCC;
   height: 600px;
   width: 200px;
+  padding-top: 40px;
   float: left;
   z-index: 0;
-}
-
-.circle {
-  width: 140px;
-  height: 140px;
-  -webkit-border-radius: 70px;
-  -moz-border-radius: 70px;
-  border-radius: 70px;
-  margin: 45px auto;
-  background-color: #FFFFE0;
-  z-index: 1;
-  display: table;
 }
 
 .text-circle {
@@ -56,22 +44,47 @@ h4 {
 }
 
 #swing-bar {
-  background-color: #EEEEEE;
   height: 50px;
   width: 740px;
+}
+
+#two-party-title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 120%;
+}
+
+#alp-label {
+  float: left;
+  height: 20px;
+  width: 200px;
+  padding-left: 65px;
+  font-weight: bold;
+  color: #CC0000;
+}
+
+#coalition-label {
+  float: right;
+  height: 20px;
+  width: 200px;
+  text-align: right;
+  padding-right: 65px;
+  font-weight: bold;
+  color: #0000CC;
 }
 
 #instructions {
   background-color: #FFFFFF;
   height: 450px;
-  width: 160px;
+  width: 240px;
   float: left;
 }
 
 #selection-instruction {
   height: 350px;
   width: 160px;
-  padding-top: 40px;
+  padding-top: 80px;
+  padding-left: 50px;
 }
 
 #social-instruction {
@@ -86,7 +99,7 @@ h4 {
   color: #FFFFFF;
   background-color: #FFFFFF;
   height: 450px;
-  width: 580px;
+  width: 500px;
   float: right;
 }
 

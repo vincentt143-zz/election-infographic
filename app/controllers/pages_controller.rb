@@ -7,6 +7,10 @@ class PagesController < ApplicationController
     name = params[:electorate]
     electorate = Electorate.find_by_name name
 
+    if(electorate.class == NilClass)
+      render json: {:name => "N/A"}
+      return
+    end
     age = AgeStatistic.find_by(:electorate  => electorate)
     gender = GenderStatistic.find_by(:electorate  => electorate)
     religion = ReligionStatistic.find_by(:electorate  => electorate)

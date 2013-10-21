@@ -111,3 +111,17 @@ h4 {
 .subunit-boundary {
   stroke: white;
 }
+
+#electorate_found {
+  visibility: hidden;
+  color: red
+}
+
+#has_facts {
+  visibility: hidden;
+  color: red
+}
+
+#electorate {
+  width: 90%;
+}

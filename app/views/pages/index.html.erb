@@ -10,21 +10,53 @@
       var genderChart, ageChart, religionChart;
       var fetch = function(electorate) {
           $.getJSON("/electorates", {electorate: electorate}, function(data) {
-              update(data);
+              if (data.name == "N/A") {
+                  var element=document.getElementById("electorate_found");
+                  element.style.visibility = "visible";
+              } else {
+                  var element=document.getElementById("electorate_found");
+                  element.style.visibility = "hidden";
+                  update(data);
+              }
           });
 
       };
       var init = function() {
           // Instantiate and draw our chart, passing in some options.
           var genderNode = document.getElementById('gender');
-          var ageNode = document.getElementById('age')
-          var religionNode = document.getElementById('religious_belief')
+          var ageNode = document.getElementById('age');
+          var religionNode = document.getElementById('religious_belief');
           genderChart = new google.visualization.PieChart(genderNode);
           ageChart = new google.visualization.PieChart(ageNode);
           religionChart = new google.visualization.PieChart(religionNode);
           fetch("Australia");
       };
       var update = function(data) {
+          if (data.gender == null) {
+              var element=document.getElementById("has_facts");
+              element.style.visibility = "visible";
+              data.gender = {};
+              data.age = {};
+              data.religion = {};
+              data.gender.males = 1;
+              data.gender.females = 1;
+              data.age.under_twenty_five = 1;
+              data.age.twenty_five_to_thirty_nine = 1;
+              data.age.forties = 1;
+              data.age.fifties = 1;
+              data.age.sixty_and_over = 1;
+              data.religion.christianity = 1;
+              data.religion.buddhism = 1;
+              data.religion.hinduism = 1;
+              data.religion.islam = 1;
+              data.religion.judaism = 1;
+              data.religion.other = 1;
+              data.religion.no_religion = 1;
+
+          } else {
+              var element=document.getElementById("has_facts");
+              element.style.visibility = "hidden";
+          }
           var element=document.getElementById("data_for");
           element.innerHTML="Election data for " + data.name;
 
@@ -90,7 +122,7 @@
               ['',  data.labor_percentage, data.liberal_percentage]
           ]);
 
-          var options = {
+          var twoPartyOpt = {
               title: 'Two Party Preferred Candidates',
               hAxis: { textPosition: 'none', gridlines: {color: 'transparent'}, baselineColor: 'transparent', format: '##.##%'},
               vAxis: { textPosition: 'none'},
@@ -102,8 +134,8 @@
           var formatter = new google.visualization.NumberFormat({pattern:'##.##%'});
           formatter.format(twoPartyData, 1);
           formatter.format(twoPartyData, 2);
-          var chart = new google.visualization.BarChart(document.getElementById('two-party-chart'));
-          chart.draw(twoPartyData, options);
+          var chart = new google.visualization.BarChart(document.getElementById('two_party_chart'));
+          chart.draw(twoPartyData, twoPartyOpt);
       };
       // Load the Visualization API and the piechart package.
       google.load('visualization', '1.0', {'packages':['corechart']});
@@ -115,13 +147,12 @@
       // instantiates the pie chart, passes in the data and
       // draws it.
   </script>
-  <!--<script type="text/javascript" src="d3.v3.min.js"></script>-->
-  <!--<script type="text/javascript" src="topojson.v1.min.js"></script>-->
 
 </head>
 <body>
 <div id="container">
   <div id="facts-bar">
+    <div ><p id="has_facts">This electorate has no census data available</p></div>
     <div id="gender"></div>
     <div id="age"></div>
     <div id="religious_belief"></div>
@@ -141,13 +172,14 @@
 
     <div id="instructions">
       <div id="selection-instruction">
-        <h4 align="center"><i>Select an electorate to view more detailed statistics</i></h4>
+        <h4 align="center"><i>Click on an electorate to view that electorate's election data</i></h4>
         <h4 align="center"><i>OR</i></h4>
         <h4 align="center"><i>Search your electorate:</i></h4>
         <form id="electorate_form" onSubmit="event.preventDefault(); fetch($('#electorate_form input#electorate').val())">
-          <input id="electorate" type="text" style="width: 90%" name="electorate">
+          <input id="electorate" type="text" name="electorate">
           <input type="submit" value="Submit">
         </form>
+        <p id="electorate_found">There were no electorates that matched your search</p>
       </div>
     </div>
 
@@ -157,15 +189,14 @@
   </div>
 </div>
 <script>
-    // 580 x 450
     //http://bost.ocks.org/mike/map/
 
-    var width = 960,
-            height = 1160;
+    var width = 580,
+            height = 450;
 
     var projection = d3.geo.mercator()
             .scale(500)
-            .translate([-7*width/8, 0]);
+            .translate([-3*width/2  , 0]);
 
     var path = d3.geo.path()
             .projection(projection);

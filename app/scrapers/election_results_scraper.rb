@@ -27,7 +27,6 @@ list = []
 doc.search("//tr[@id='repeaterTpp__ctl0_tppRow']").map {|a| list << a}
 list.each do |e|
   data = e.search("td")
-  puts data
   electorate.labor_votes = Integer(data[1].inner_html.gsub(/,/, ""))
   electorate.labor_percentage = Float(data[2].inner_html.gsub(/,/, ""))/100
 end

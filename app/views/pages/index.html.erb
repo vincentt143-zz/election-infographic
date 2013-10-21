@@ -167,7 +167,7 @@
         <div id="alp-label">ALP</div>
         <div id="coalition-label">Coalition</div>
       </div>
-      <div id="two-party-chart"></div>
+      <div id="two_party_chart"></div>
     </div>
 
     <div id="instructions">
@@ -177,7 +177,7 @@
         <h4 align="center"><i>Search your electorate:</i></h4>
         <form id="electorate_form" onSubmit="event.preventDefault(); fetch($('#electorate_form input#electorate').val())">
           <input id="electorate" type="text" name="electorate">
-          <input type="submit" value="Submit">
+          <input type="submit" value="Search">
         </form>
         <p id="electorate_found">There were no electorates that matched your search</p>
       </div>
@@ -196,7 +196,7 @@
 
     var projection = d3.geo.mercator()
             .scale(500)
-            .translate([-3*width/2  , 0]);
+            .translate([-13*width/8  , 0]);
 
     var path = d3.geo.path()
             .projection(projection);
